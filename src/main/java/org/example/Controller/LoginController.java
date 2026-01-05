@@ -1,19 +1,25 @@
 package org.example.Controller;
 
+import org.example.Service.LoginService;
+import org.example.dto.LoginRequest;
+import org.example.dto.LoginResponse;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.*;
 
-@Controller
+@RestController
+@RequestMapping("/api/v1/auth")
+@CrossOrigin(origins = "http://localhost:3000")
 public class LoginController {
 
-    @GetMapping("/login")
-    public String login(){
-        return "login";
-    }
+    @Autowired
+    private LoginService loginService;
 
-    @GetMapping("/home")
-    public String home() {
-        return "home";
+    @PostMapping("/login")
+    public ResponseEntity<LoginResponse> login(
+            @RequestBody LoginRequest request
+    ) {
+        return ResponseEntity.ok(loginService.login(request));
     }
-
 }
