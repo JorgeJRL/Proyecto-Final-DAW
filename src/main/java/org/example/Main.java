@@ -5,7 +5,7 @@ import org.example.Model.Usuarios.Admin;
 import org.example.Model.Usuarios.Alumno;
 import org.example.Model.Usuarios.Familias;
 import org.example.Repository.RoleR;
-import org.example.Repository.UsuarioR;
+import org.example.Repository.Usuarios.UsuarioR;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -16,16 +16,14 @@ import java.util.Set;
 
 @SpringBootApplication
 public class Main {
-    public static void main(String[] args) {SpringApplication.run(Main.class, args);
-//        String encodedPassword = encoder.encode("admin123");
-//        String encodedPassword2 = encoder.encode("alumno123");
-//        String encodedPassword3 = encoder.encode("familia123");
+    public static void main(String[] args) {
+        SpringApplication.run(Main.class, args);
+
     }
 
     @Bean
     CommandLineRunner init(UsuarioR repo, RoleR rr, BCryptPasswordEncoder encoder) {
 
-        //En el futuro se implementaran con ficheros, de momento es con datos de prueba
         return args -> {
             Role adminRole = rr.findByRol("ROLE_ADMIN")
                     .orElseGet(() -> rr.save(new Role("ROLE_ADMIN")));
