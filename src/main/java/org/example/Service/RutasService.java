@@ -5,38 +5,47 @@ import org.example.Model.Rutas;
 import org.example.Repository.RutasR;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.example.dto.Rutas.*;
 
 import java.util.List;
+
+//Preguntarle a marcos si ponemos metodos void en actualizar y tal
+
 
 @Service
 public class RutasService {
     @Autowired
     RutasR rr;
 
-    public List<Rutas> getRutas(){
-        return rr.findAll();
+    public List<RutasResponse> getRutas(){
+        return rr.findAll().stream().map(this::toRutaResponseDTO).toList();
     }
 
-    public Rutas getRuta(int id) {
-        return rr.findById(id).orElse(null);
+    public RutasResponse getRuta(int id) {
+        return toRutaResponseDTO(rr.findById(id).orElse(null));
     }
 
-    public Rutas addRutas(@Valid Rutas ruta) {
-        return rr.save(ruta);
+    public RutasResponse addRutas(@Valid RutasRequest rutasRequest) {
+        Rutas ruta = new Rutas();
+        ruta.setNombre(rutasRequest.nombre());
+        ruta.setHorarioLlegada(rutasRequest.horarioLlegada());
+        ruta.setHorarioSalida(rutasRequest.horarioSalida());
+        ruta.setEstado(rutasRequest.estado());
+        rr.save(ruta);
+
+        return toRutaResponseDTO(ruta);
     }
 
-    public Rutas editRutas(@Valid Rutas ruta, int id) throws Exception{
-        Rutas rutaAux = rr.findById(id).orElse(null);
+    public RutasResponse editRutas(@Valid RutasRequest rutasRequest, int id) throws Exception{
+        Rutas ruta = rr.findById(id).orElse(null);
 
-        if(rutaAux != null){
-            rutaAux.setNombre(ruta.getNombre());
-            rutaAux.setHorarioLlegada(ruta.getHorarioLlegada());
-            rutaAux.setHorarioSalida(ruta.getHorarioSalida());
-            ruta.setEstado(ruta.isEstado());
-            rr.save(rutaAux);
-        }else throw new Exception("No existe esa ruta");
+        ruta.setNombre(rutasRequest.nombre());
+        ruta.setHorarioLlegada(rutasRequest.horarioLlegada());
+        ruta.setHorarioSalida(rutasRequest.horarioSalida());
+        ruta.setEstado(rutasRequest.estado());
+        rr.save(ruta);
 
-        return rutaAux;
+        return toRutaResponseDTO(ruta);
     }
 
     public void removeRutas(int id) throws Exception{
@@ -46,5 +55,12 @@ public class RutasService {
             rr.delete(ruta);
         }else throw new Exception("No existe esa ruta");
     }
-
+    private RutasResponse toRutaResponseDTO(Rutas ruta) {
+        return new RutasResponse(
+                ruta.getNombre(),
+                ruta.getHorarioLlegada(),
+                ruta.getHorarioSalida(),
+                ruta.isEstado()
+        );
+    }
 }

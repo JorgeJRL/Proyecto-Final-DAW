@@ -56,7 +56,7 @@ public class SecurityConfig {
         JwtAuthenticationFilter jwtAuthFilter= new JwtAuthenticationFilter(jwtService, us);
 
         http.authorizeHttpRequests((authz) -> authz
-                .requestMatchers("/api/**").permitAll()
+                .requestMatchers("/api/auth/**").permitAll()
                 .anyRequest().authenticated()
         );
 

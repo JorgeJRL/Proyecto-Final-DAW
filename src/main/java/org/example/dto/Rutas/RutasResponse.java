@@ -1,4 +1,4 @@
-package org.example.DTO.Rutas;
+package org.example.dto.Rutas;
 
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -6,12 +6,8 @@ import jakarta.persistence.Id;
 
 import java.time.LocalTime;
 import java.util.ArrayList;
-//Para el futuro cuando se creen las relaciones
 
-public record RutasResponse(@Id
-                            @GeneratedValue(strategy = GenerationType.IDENTITY)
-                            int idRuta,
-
+public record RutasResponse(
                             String nombre,
 
                             ArrayList<LocalTime> horarioLlegada,
