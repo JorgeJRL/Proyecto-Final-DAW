@@ -1,31 +1,33 @@
-package org.example.Security;
+package org.example.Service;
 
+import org.example.DTO.User.UserRequest;
 import org.example.Model.Role;
 import org.example.Model.Usuarios.User;
+import org.example.Repository.Usuarios.UsuarioR;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import org.example.Repository.UsuarioR;
 
 import java.util.stream.Collectors;
 
-
 @Service
-public class CustomUserDetailsService implements UserDetailsService {
+public class UserService implements UserDetailsService {
 
     private final UsuarioR repo;
 
-    public CustomUserDetailsService(UsuarioR repo) {
+    public UserService(UsuarioR repo) {
         this.repo = repo;
     }
 
+
     @Override
-    public UserDetails loadUserByUsername(String nombre)
+    public UserDetails loadUserByUsername(String username)
             throws UsernameNotFoundException {
 
-        User user = repo.findByNombre(nombre)
+        User user = repo.findByNombre(username)
                 .orElseThrow(() -> new UsernameNotFoundException("Usuario no encontrado"));
 
         return new org.springframework.security.core.userdetails.User(
@@ -37,4 +39,5 @@ public class CustomUserDetailsService implements UserDetailsService {
                         .collect(Collectors.toSet())
         );
     }
+
 }

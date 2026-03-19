@@ -1,25 +1,48 @@
 package org.example.Controller;
 
-import org.example.Service.LoginService;
-import org.example.dto.LoginRequest;
-import org.example.dto.LoginResponse;
+import jakarta.validation.Valid;
+import org.example.DTO.User.UserRequest;
+import org.example.Security.JwtService;
+import org.example.Service.AuthService;
+import org.example.Service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/api/v1/auth")
-@CrossOrigin(origins = "http://localhost:3000")
+@RequestMapping("/api/auth")
 public class LoginController {
 
     @Autowired
-    private LoginService loginService;
+    private AuthService as;
+
+    @Autowired
+    AuthenticationManager authenticationManager;
+
+    @Autowired
+    UserService us;
+
+    @Autowired
+    JwtService jwtService;
 
     @PostMapping("/login")
-    public ResponseEntity<LoginResponse> login(
-            @RequestBody LoginRequest request
-    ) {
-        return ResponseEntity.ok(loginService.login(request));
+    public ResponseEntity<?> login(@Valid @RequestBody UserRequest request) {
+        Authentication authentication = new UsernamePasswordAuthenticationToken(
+                request.nombre(),
+                request.password()
+        );
+
+        authenticationManager.authenticate(authentication);
+
+        UserDetails user = us.loadUserByUsername(request.nombre());
+        String token = jwtService.generateToken(user);
+        return ResponseEntity.ok(token);
     }
 }
