@@ -1,12 +1,10 @@
 package org.example.Model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 
 import java.time.LocalTime;
 import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 public class Rutas {
@@ -23,6 +21,9 @@ public class Rutas {
     private ArrayList<LocalTime> horarioSalida;
 
     private boolean estado;
+
+    @OneToMany(mappedBy = "ruta", cascade = CascadeType.ALL)
+    private List<Paradas> paradas;
 
     public Rutas() {
     }

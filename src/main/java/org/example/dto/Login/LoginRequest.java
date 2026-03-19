@@ -1,4 +1,4 @@
-package org.example.dto;
+package org.example.dto.Login;
 
 public record LoginRequest (
     String nombre,

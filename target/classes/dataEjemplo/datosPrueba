@@ -34,3 +34,34 @@ PUT
   ],
   "estado": false
 }
+
+
+
+Parada:
+
+
+Post
+
+{
+  "nombreParada": "Parada Central",
+  "latitud": 28.4698,
+  "longitud": -16.2549,
+  "orden": 1,
+  "ruta": {
+    "idRuta": 5
+  }
+}
+
+
+
+Put
+
+{
+  "nombreParada": "Parada Central Modificada",
+  "latitud": 28,
+  "longitud": -16,
+  "orden": 2,
+  "ruta": {
+    "idRuta": 5
+  }
+}
