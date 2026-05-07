@@ -1,4 +1,4 @@
-
+Rutas
 
 POST
 {
@@ -64,4 +64,45 @@ Put
   "ruta": {
     "idRuta": 5
   }
+}
+
+
+Avisos:
+
+Post:
+{ "tipo": "INCIDENCIA", "gravedad": 2, "mensaje": "Accidente en la ruta", "fechaHora": "2026-04-25T08:00:00", "idRuta": 1, "idAdmin": 1 }
+{ "tipo": "EMERGENCIA", "gravedad": 5, "mensaje": "Emergencia médica en el autobús", "fechaHora": "2026-04-25T08:15:00", "idRuta": 1, "idAdmin": 1 }
+{ "tipo": "INFORMATIVO", "gravedad": 1, "mensaje": "Cambio de parada temporal", "fechaHora": "2026-04-25T08:30:00", "idRuta": 1, "idAdmin": 1 }
+{ "tipo": "RETRASO", "gravedad": 2, "mensaje": "Retraso por obras", "fechaHora": "2026-04-25T08:45:00", "idRuta": 1, "idAdmin": 1 }
+{ "tipo": "CANCELACION", "gravedad": 4, "mensaje": "Ruta cancelada por huelga", "fechaHora": "2026-04-25T09:00:00", "idRuta": 1, "idAdmin": 1 }
+{ "tipo": "AVERIA", "gravedad": 3, "mensaje": "Avería mecánica del autobús", "fechaHora": "2026-04-25T09:15:00", "idRuta": 1, "idAdmin": 1 }
+
+
+
+Put:
+{
+    "mensaje": "Retraso solucionado, ruta operativa",
+    "gravedad": 1,
+    "tipo": "INFORMATIVO",
+    "fechaHora": "2026-04-25T11:00:00",
+    "idRuta": 1,
+    "idAdmin": 1
+}
+
+
+Transportes:
+
+
+Post:
+
+{
+    "matricula": "1234ABC",
+    "tipo": "BUS"
+}
+
+
+Put:
+{
+    "matricula": "1234ABC",
+    "tipo": "Guagua"
 }

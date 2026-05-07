@@ -1,8 +1,5 @@
 package org.example.Controller;
 
-import jakarta.validation.Valid;
-import org.example.Model.Rutas;
-import org.example.Repository.RutasR;
 import org.example.Service.RutasService;
 import org.example.dto.Rutas.RutasRequest;
 import org.example.dto.Rutas.RutasResponse;
@@ -27,7 +24,7 @@ public class RutasController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<RutasResponse> getRutas(@PathVariable int id){
+    public ResponseEntity<RutasResponse> getRuta(@PathVariable int id){
         return ResponseEntity.ok(rs.getRuta(id));
     }
 
