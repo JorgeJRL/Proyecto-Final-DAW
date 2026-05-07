@@ -1,6 +1,7 @@
 package org.example.Model;
 
 import jakarta.persistence.*;
+import org.example.Model.Usuarios.Admin;
 
 @Entity
 public class Paradas {
@@ -20,6 +21,11 @@ public class Paradas {
     @ManyToOne
     @JoinColumn(name = "idRuta")
     private Rutas ruta;
+
+    @ManyToOne
+    @JoinColumn(name = "admin_id", referencedColumnName = "id_usuario")
+    private Admin admin;
+
 
 
     public Paradas() {

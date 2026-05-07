@@ -1,9 +1,9 @@
 package org.example.Model.Usuarios;
 
-import jakarta.persistence.DiscriminatorValue;
-import jakarta.persistence.Entity;
+import jakarta.persistence.*;
 import org.example.Model.Role;
 
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -14,6 +14,8 @@ public class Familias extends User {
     private String telefono;
     private String telefonoEmergencia;
 
+    @OneToMany(mappedBy = "familia", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<Alumno> alumnos;
 
     public Familias() {
     }
@@ -48,5 +50,13 @@ public class Familias extends User {
 
     public void setTelefonoEmergencia(String telefonoEmergencia) {
         this.telefonoEmergencia = telefonoEmergencia;
+    }
+
+    public List<Alumno> getAlumnos() {
+        return alumnos;
+    }
+
+    public void setAlumnos(List<Alumno> alumnos) {
+        this.alumnos = alumnos;
     }
 }

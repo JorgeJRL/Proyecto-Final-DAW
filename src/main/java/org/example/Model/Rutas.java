@@ -1,6 +1,9 @@
 package org.example.Model;
 
 import jakarta.persistence.*;
+import org.example.Model.Usuarios.Admin;
+import org.example.Model.Usuarios.Alumno;
+import org.example.Model.Usuarios.Familias;
 
 import java.time.LocalTime;
 import java.util.ArrayList;
@@ -24,6 +27,26 @@ public class Rutas {
 
     @OneToMany(mappedBy = "ruta", cascade = CascadeType.ALL)
     private List<Paradas> paradas;
+
+    @OneToMany(mappedBy = "ruta", cascade = CascadeType.ALL)
+    private List<Avisos> avisos;
+
+    // Un admin crea la ruta
+    @ManyToOne
+    @JoinColumn(name = "admin_id", referencedColumnName = "id_usuario")
+    private Admin admin;
+
+    @ManyToOne
+    @JoinColumn(name = "familia_id", referencedColumnName = "id_usuario")
+    private Familias familia;
+
+    @ManyToOne
+    @JoinColumn(name = "alumno_id", referencedColumnName = "id_usuario")
+    private Alumno alumno;
+
+    @ManyToOne
+    @JoinColumn(name = "idCentro")
+    private Centro centro;
 
     public Rutas() {
     }

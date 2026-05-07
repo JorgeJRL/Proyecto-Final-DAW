@@ -2,8 +2,10 @@ package org.example.Controller;
 
 import org.example.Service.ParadasService;
 
+import org.example.Service.UserService;
 import org.example.dto.Paradas.ParadasRequest;
 import org.example.dto.Paradas.ParadasResponse;
+import org.example.dto.User.Alumno.AlumnoResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,6 +19,9 @@ import java.util.List;
 public class ParadasController {
     @Autowired
     ParadasService ps;
+
+    @Autowired
+    UserService us;
 
     @GetMapping("/")
     public ResponseEntity<List<ParadasResponse>> getParadas(){
@@ -51,4 +56,10 @@ public class ParadasController {
         }
     }
 
+    // Ver alumnos activos en una parada
+    @GetMapping("/parada/{idParada}/alumnos")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    public ResponseEntity<List<AlumnoResponse>> verAlumnosByParada(@PathVariable int idParada) {
+        return ResponseEntity.ok(us.verAlumnosByParada(idParada));
+    }
 }
